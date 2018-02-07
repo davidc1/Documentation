@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<!-- Production Project -->
+
+<!DOCTYPE project [
+<!ENTITY release      "v06_26_01_10" >
+<!ENTITY file_type    "reco"      >
+<!ENTITY run_type     "physics"   >
+<!ENTITY name         "ccpi0_ssnet"   >
+<!ENTITY prod_version "v1"        >
+]>
+
+<job>
+
+  <project name="&name;">
+
+    
+    <!--<server>https://fifebatch-preprod.fnal.gov:8443</server>-->
+    
+    <!-- Project size -->
+    <numevents>10000000</numevents>
+    
+    <!-- Operating System -->
+    <os>SL6</os>
+    
+    <!-- Batch resources -->
+    <resource>DEDICATED,OPPORTUNISTIC</resource>
+
+    <jobsub>--expected-lifetime=2h</jobsub>
+
+    
+    <!-- Larsoft information -->
+    <larsoft>
+      <tag>&release;</tag>
+      <qual>e10:prof</qual>
+      <local>/pnfs/uboone/persistent/users/davidc/jobs/v06_26_01_10/local.tar</local>
+    </larsoft>
+    
+    <!-- Project stages -->
+    
+    <stage name="ssnet">
+      <!--<inputdef>prod_reco2_bnb_v10_mcc8</inputdef>-->
+      <inputlist>/pnfs/uboone/persistent/users/davidc/jobs/v06_26_01_10/larsoft.txt</inputlist>
+      <fcl>/pnfs/uboone/persistent/users/davidc/jobs/v06_26_01_10/run_SSNetHitProducer.fcl</fcl>
+      <jobsub>-f /pnfs/uboone/persistent/users/davidc/jobs/v06_26_01_10/ssnet.txt</jobsub>
+      <initscript>grabssnet.sh</initscript>
+      <outdir>/pnfs/uboone/scratch/users/davidc/&name;/data</outdir>
+      <logdir>/pnfs/uboone/scratch/users/davidc/&name;/log</logdir>
+      <workdir>/pnfs/uboone/scratch/users/davidc/&name;/work</workdir>
+      <maxfilesperjob>1</maxfilesperjob>
+      <numjobs>201</numjobs>
+      <memory>2000</memory>
+      <!-- <datatier>scanned</datatier> -->
+      <!--    <defname>&name;_&prod_version;</defname> -->
+    </stage>
+
+  </project>
+  
+</job>
